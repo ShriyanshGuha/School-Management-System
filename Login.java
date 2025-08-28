@@ -20,6 +20,7 @@ public class Login extends JFrame implements ActionListener
         f.setBackground(Color.WHITE);
         f.setLayout(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setResizable(false);
         
         l1 = new JLabel();
         l1.setBounds(0,0,750,450);
@@ -46,7 +47,7 @@ public class Login extends JFrame implements ActionListener
         ch1 = new Choice();
         ch1.add("Admin");
         ch1.add("Faculty");
-        ch1.add("User");
+        ch1.add("Student");
         ch1.setBounds(450,200,170,30);
         ch1.setFont(new Font("Arial", Font.PLAIN,20));
         l1.add(ch1);
@@ -82,9 +83,8 @@ public class Login extends JFrame implements ActionListener
         bt2.setFont(new Font("Arial", Font.PLAIN,20));
         bt1.setBounds(300,340,120,40);
         bt2.setBounds(470,340,120,40);
-        bt1.setBackground(new Color(83,253,236));
+        bt1.setBackground(new Color(0,128,255));
         bt2.setBackground(Color.lightGray);
-        bt1.setForeground(Color.WHITE);
         bt1.setForeground(Color.BLACK);
         bt1.addActionListener(this);
         bt2.addActionListener(this);
@@ -93,10 +93,6 @@ public class Login extends JFrame implements ActionListener
         f.setVisible(true);
         f.setSize(750,460);
         f.setLocation(300,100);
-        
-        
-        
-            
         }
         catch(Exception e)
         {
@@ -118,20 +114,44 @@ public class Login extends JFrame implements ActionListener
                String username = tf1.getText();
                String password = new String(pf1.getPassword());
                String account = ch1.getSelectedItem();
+               String q = "";
                
-               String q = "select * from admin where username='"+username+"' and password='"+password+"';";
+                if(account.equals("Admin")) 
+                {
+                    q = "select * from admin where username='"+username+"' and password='"+password+"';";
+                } 
+                else if(account.equals("Faculty")) 
+                {
+                    q = "select * from faculty where username='"+username+"' and password='"+password+"';";
+                } 
+                else if(account.equals("Student")) 
+                {
+                    q = "select * from student where username='"+username+"' and password='"+password+"';";
+                }
+               
+              
                ResultSet rs =obj.st.executeQuery(q);
                if(rs.next())
                {
-                   new AdminHomePage().setVisible(true);
                    System.out.println("Login Successful");
                    JOptionPane.showMessageDialog(null,"Login Successful\nWelcome "+username);
-               }
+                   f.setVisible(false);
+                   if(account.equals("Admin")) 
+                   {
+                        new AdminHomePage();
+                   } 
+                   else if(account.equals("Faculty")) 
+                   {
+                        new FacultyHomePage();
+                   } 
+                   else if(account.equals("Student")) 
+                   {
+                        new StudentHomePage();
+                   }
+                }
                else
                {
                    JOptionPane.showMessageDialog(null, "You have entered wrong username and password");
-                   f.setVisible(false);
-                   f.setVisible(true);
                }
                
            }
