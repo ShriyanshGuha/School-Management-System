@@ -1,9 +1,8 @@
 package SMS;
-import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 import javax.swing.*;
-import javax.swing.JOptionPane;
 public class Login extends JFrame implements ActionListener
 {
     JFrame f;
