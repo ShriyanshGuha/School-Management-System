@@ -161,7 +161,8 @@ public class Login extends JFrame implements ActionListener
        }
        if(e.getSource()== bt2)
        {
-           f.setVisible(false);
+           f.dispose();
        }
     }
 }
+
